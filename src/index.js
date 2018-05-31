@@ -1,9 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import App from '../main/app'
 
-const Index = () => { 
-   
-    return <div > Cryptonita </div>
-}
 
-ReactDOM.render(<Index/> , document.getElementById("index"))
+ReactDOM.render(<App/> , document.getElementById("index"))

@@ -5,8 +5,12 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: "./src/index.html",
     filename: "./index.html"
 });
+const jQueryPlugin = new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        });
 
-module.exports = {    
+module.exports = {
     resolve: {
         alias: {
             modules: __dirname + '/node_modules',
@@ -16,7 +20,7 @@ module.exports = {
     },
     module: {                   
         rules: [{
-                test: /\.js$/,
+                test: /.js[x]?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"                   
@@ -50,8 +54,5 @@ module.exports = {
             }
         ]
     },
-    plugins: [htmlWebpackPlugin, new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery'
-    })]
+    plugins: [htmlWebpackPlugin, jQueryPlugin]
 };
