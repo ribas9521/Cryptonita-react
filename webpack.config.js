@@ -1,5 +1,6 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin")
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: "./src/index.html",
@@ -7,8 +8,10 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 });
 const jQueryPlugin = new webpack.ProvidePlugin({
             $: 'jquery',
-            jQuery: 'jquery'
-        });
+            jQuery: 'jquery',
+            jquery: 'jquery'
+});
+
 
 module.exports = {
     resolve: {
@@ -18,8 +21,12 @@ module.exports = {
             bootstrap: 'modules/admin-lte/plugins/bootstrap/css/bootstrap.min.css'
         }
     },
+     plugins: [htmlWebpackPlugin, jQueryPlugin, new MiniCssExtractPlugin({
+         filename: 'style.css'
+     })],
     module: {                   
-        rules: [{
+        rules: [
+            {
                 test: /.js[x]?$/,
                 exclude: /node_modules/,
                 use: {
@@ -27,32 +34,39 @@ module.exports = {
                 }
             },
             {
-                test: /\.woff|.woff2|.ttf|.eot|.svg|.png|.jpg*.*$/,
-                use:{
-                    loader: 'file'
-                }
+                test: /\.s?[ac]ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,                      
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },            
+            {
+                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff"
+            }, 
+            {
+                test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff"
+            }, 
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+            }, 
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file-loader"
+            }, 
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url-loader?limit=10000&mimetype=image/svg+xml"
             },
             {
-                test: /\.scss$/,
-                use: [{
-                        loader: "style-loader"
-                    },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: "[name]_[local]_[hash:base64]",
-                            sourceMap: true,
-                            minimize: true
-                        }
-                    },
-                    {                        
-                        loader: "sass-loader"
-                    }
-                ]
+                test: /\.(png|jpg|gif)$/,
+                loader : 'file-loader'
             }
         ]
-    },
-    plugins: [htmlWebpackPlugin, jQueryPlugin]
+        
+    }
+   
 };
