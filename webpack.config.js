@@ -17,7 +17,7 @@ module.exports = {
     resolve: {
         alias: {
             modules: __dirname + '/node_modules',
-            jquery: 'modules/admin-lte/plugins/jquery/jquery.min.js',
+            jquery: 'modules/jquery/dist/jquery.min.js',
             bootstrap: 'modules/admin-lte/plugins/bootstrap/css/bootstrap.min.css'
         }
     },
@@ -27,7 +27,7 @@ module.exports = {
     module: {                   
         rules: [
             {
-                test: /.js[x]?$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"                   
