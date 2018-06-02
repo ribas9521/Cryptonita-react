@@ -14,13 +14,7 @@ const jQueryPlugin = new webpack.ProvidePlugin({
 
 
 module.exports = {
-    resolve: {
-        alias: {
-            modules: __dirname + '/node_modules',
-            jquery: 'modules/jquery/dist/jquery.min.js',
-            bootstrap: 'modules/admin-lte/plugins/bootstrap/css/bootstrap.min.css'
-        }
-    },
+    
      plugins: [htmlWebpackPlugin, jQueryPlugin, new MiniCssExtractPlugin({
          filename: 'style.css'
      })],
@@ -31,7 +25,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"                   
-                }
+                }                
             },
             {
                 test: /\.s?[ac]ss$/,
@@ -67,6 +61,14 @@ module.exports = {
             }
         ]
         
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+         alias: {
+             modules: __dirname + '/node_modules',
+             jquery: 'modules/jquery/dist/jquery.min.js',
+             bootstrap: 'modules/admin-lte/plugins/bootstrap/css/bootstrap.min.css'
+         }
     }
    
 };
